@@ -6,6 +6,7 @@
 namespace quatmath_consts
 {
     const float eps = 1e-6f;
+    const float pi = 3.1415f;
 }
 
 Eigen::Vector4f quatFromEul(const Eigen::Vector3f& eul)
@@ -73,4 +74,14 @@ Eigen::Matrix<float, 3, 3> quatToMatrix(const Eigen::Vector4f& q)
 	Eigen::Matrix<float, 3, 3> R;
 	R << R11, R12, R13, R21, R22, R23, R31, R32, R33;
 	return R;
+}
+
+float shortestRotation(float from, float to)
+{
+    float da = fmod((to - from + quatmath_consts::pi), 2*quatmath_consts::pi) - quatmath_consts::pi;
+    if (da < -quatmath_consts::pi)
+    {
+        da = da + 2*quatmath_consts::pi;
+    }
+    return da;
 }
