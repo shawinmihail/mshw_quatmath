@@ -85,3 +85,14 @@ float shortestRotation(float from, float to)
     }
     return da;
 }
+
+Eigen::Vector4f wgsToEnuQuat(float lat, float lon)
+{
+    double pi = 3.1415;
+    Eigen::Vector4f qlat = quatFromEul(Eigen::Vector3f(pi/2 - lat, 0, 0));
+    Eigen::Vector4f qlon = quatFromEul(Eigen::Vector3f(0, 0, pi/2 + lon));
+                 
+    Eigen::Vector4f res = quatMultiply(qlon, qlat);
+    
+    return res;
+}
